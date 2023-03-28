@@ -2,7 +2,7 @@
 
 ![](https://github.com/erkkah/tigr/blob/master/tigr.png)
 
-Copy [erkkah/tigr](https://github.com/erkkah/tigr)
+Copy [erkkah/tigr](https://github.com/erkkah/tigr)  
 Use it with nim language :)
 
 TIGR is a tiny cross-platform graphics library,
