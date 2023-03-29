@@ -5,6 +5,7 @@ var
   playery = 200'f
   playerxs, playerys: float
   standing = true
+  jumps = 0
   remaining: float
   backdrop, screen: ptr Tigr
 
@@ -13,11 +14,16 @@ proc myUpdate(dt: float) =
     remaining -= dt
 
   # Read the keyboard and move the player.
-  if standing and (keyDown(screen, TK_SPACE) != 0):
-    playerys -= 200
+  if (standing or jumps < 2) and ((keyDown(screen, TK_SPACE)!=0) or
+    (keyDown(screen, 'W'.ord)!=0)):
+    playerys -= (200 - jumps * 50).float
+    jumps.inc
+  elif screen.keyDown(TK_DOWN)!=0 or keyHeld(screen, 'S'.ord)!=0:
+    if standing: jumps = -1
+    playerys += 20
   if screen.keyDown(TK_LEFT)!=0 or keyHeld(screen, 'A'.ord)!=0:
     playerxs -= 10
-  if screen.keyDown(TK_RIGHT)!=0 or keyHeld(screen, 'D'.ord)!=0:
+  elif screen.keyDown(TK_RIGHT)!=0 or keyHeld(screen, 'D'.ord)!=0:
     playerxs += 10
 
   var oldx = playerx; var oldy = playery
@@ -49,10 +55,12 @@ proc myUpdate(dt: float) =
     p = get(backdrop, oldx.cint, oldy.cint)
     if p.r == 0 and p.g == 0 and p.b == 0 and playerys > 0:
       standing = true
+      if jumps < 0: oldy += 2
       playerys = 0
       dy = 0
     oldx += dx
     oldy += dy
+  if standing: jumps = 0
 
   playerx = oldx
   playery = oldy
