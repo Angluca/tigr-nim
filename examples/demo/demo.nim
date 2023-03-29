@@ -6,10 +6,12 @@ var
   playerxs, playerys: float
   standing = true
   jumps = 0
+  is_fly = false
   remaining: float
   backdrop, screen: ptr Tigr
 
 proc myUpdate(dt: float) =
+  if is_fly: return
   if remaining > 0:
     remaining -= dt
 
@@ -43,6 +45,8 @@ proc myUpdate(dt: float) =
     playerx = screen.w.float - 8
     playerxs = 0
 
+  if playery.int < 0:
+    is_fly = true
   # Apply playfield collision and stepping.
   var
     dx = (playerx - oldx) / 10
@@ -114,8 +118,10 @@ proc main() =
     screen.blit(backdrop, 0, 0, 0, 0, backdrop.w, backdrop.h)
     screen.blitAlpha(squinkle, playerx.cint - squinkle.w div 2, playery.cint - squinkle.h, 0, 0, squinkle.w, squinkle.h, 1.0f)
     screen.print(tfont, 10, 10, RGBA(0xc0, 0xd0, 0xff, 0xc0), greeting)
-    screen.print(tfont, 10, 222, RGBA(0xff, 0xff, 0xff, 0xff), "A D + SPACE")
+    screen.print(tfont, 10, 222, RGBA(0xff, 0xff, 0xff, 0xff), "W A S D + SPACE")
 
+    if is_fly:
+      screen.print(tfont, screen.w div 3, screen.h div 2 - 10, RGBA(0xff, 0x66, 0x66, 0xCC), "He has reached Mars ...")
     #Grab any chars and add them to our buffer.
     while true:
       let c = screen.readChar()
