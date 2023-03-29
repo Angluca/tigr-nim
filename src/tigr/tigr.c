@@ -4633,14 +4633,14 @@ int tigrGAPIEnd(Tigr* bmp) {
     return glXMakeCurrent(NULL, 0, 0) ? 0 : -1;
 }
 
-int tigrKeyDown(Tigr* bmp, int key) {
+int tigrKeyDown(Tigr* bmp, TKey key) {
     TigrInternal* win;
     assert(key < 256);
     win = tigrInternal(bmp);
     return win->keys[key] && !win->prev[key];
 }
 
-int tigrKeyHeld(Tigr* bmp, int key) {
+int tigrKeyHeld(Tigr* bmp, TKey key) {
     TigrInternal* win;
     assert(key < 256);
     win = tigrInternal(bmp);
