@@ -36,7 +36,6 @@ type
     b* {.importc: "b".}: byte
     a* {.importc: "a".}: byte
 
-
 ##  Window flags.
 const
   TIGR_FIXED* = 0
@@ -65,7 +64,6 @@ type
     ##  OS window handle, NULL for off-screen bitmaps.
     blitMode* {.importc: "blitMode".}: cint
     ##  Target bitmap blit mode
-
 
 ##  Creates a new empty window with a given bitmap size.
 ##
@@ -237,7 +235,6 @@ type
     numGlyphs* {.importc: "numGlyphs".}: cint
     glyphs* {.importc: "glyphs".}: ptr TigrGlyph
 
-
 ##  Loads a font. The font bitmap should contain all characters
 ##  for the given codepage, excluding the first 32 control codes.
 ##  Supported codepages:
@@ -288,7 +285,6 @@ type
   TigrTouchPoint* {.importc: "TigrTouchPoint", header: vim, bycopy.} = object
     x* {.importc: "x".}: cint
     y* {.importc: "y".}: cint
-
 
 ##  Reads touch input for a window.
 ##  Returns number of touch points read.
@@ -349,4 +345,3 @@ proc decodeUTF8*(text: cstring; cp: pointer): cstring {.cdecl,
 
 ##  Encodes a single UTF8 codepoint and returns the next pointer.
 proc encodeUTF8*(text: cstring; cp: cint): cstring {.cdecl, importc: "tigrEncodeUTF8", header: vim.}
-
