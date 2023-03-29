@@ -45,9 +45,8 @@ var screen = window(320, 240, "Hello", 0)
 while screen.closed() == 0:
   screen.clear(tigrRGB(0x80, 0x90, 0xa0))
   screen.print(tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff), "Hello the world!");
-  #screen.update() # OOP call it's OK
-  #tigr.update(screen) # It's OK too , function in tigr.nim
-  update(screen) # Easy c call
+  # c: tigrUpdate,tigrRGB ... == nim: tigr.update, tigr.RGB ...
+  update(screen) # == screen.update() == tigr.update(screen)
 ```
 
 ## How to use TIGR
