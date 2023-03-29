@@ -43,8 +43,8 @@ import tigr
 
 var screen = window(320, 240, "Hello", 0)
 while screen.closed() == 0:
-  screen.clear(tigrRGB(0x80, 0x90, 0xa0))
-  screen.print(tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff), "Hello the world!");
+  screen.clear(RGB(0x80, 0x90, 0xa0))
+  screen.print(tfont, 120, 110, tigr.RGB(0xff, 0xff, 0xff), "Hello the world!");
   # c: tigrUpdate,tigrRGB ... == nim: tigr.update, tigr.RGB ...
   update(screen) # == screen.update() == tigr.update(screen)
 ```
