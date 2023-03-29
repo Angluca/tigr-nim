@@ -35,7 +35,7 @@ while not win1.isNil or not win2.isNil:
       win1 = nil
   if not win2.isNil:
     if win2.beginOpenGL() != 0:
-      test() # glfn: I'm Here !!
+      test() # test:) ------- I'm Here !! --------
     win2.clear(RGBA(0x00, 0x00, 0x00, 0x00))
     win2.print(tfont, 120, 110, RGB(0xff, 0xff, 0xff),
               "nimcc code -------------- #2.")

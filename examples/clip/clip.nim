@@ -24,8 +24,8 @@ while screen.closed() == 0 and
 
   screen.circle(cx + d, cy - d, d, c2)
   screen.fillCircle(cx + d, cy - d, d, c3)
-  let msg = ("Half a thought is also a thought, " & $iquit).cstring
   let
+    msg = ("Half a thought is also a thought, " & $iquit).cstring
     tw = tfont.textWidth(msg)
     th = tfont.textHeight(msg)
   screen.print(tfont, cx - tw div 2, cy + d - th div 2, c1, msg)

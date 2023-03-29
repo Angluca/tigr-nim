@@ -1,5 +1,6 @@
 import tigr
 import opengl
+# nimble install opengl
 
 var
   win1 = window(320, 240, "ogl #1", 0)

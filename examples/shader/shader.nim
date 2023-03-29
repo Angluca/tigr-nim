@@ -24,7 +24,7 @@ while screen.closed() == 0 and
   p = 6.28 * phase / duration
   screen.setPostFX(p, 0, 0, 0)
   screen.clear(RGB(0x80, 0x90, 0xa0))
-  screen.print(tfont, 120, 110, RGB(0xff, 0xff, 0xff), "Shady business: " & $iquit)
+  screen.print(tfont, 120, 110, RGB(0xff, 0xff, 0xff), ("Shady business: " & $iquit).cstring)
   screen.update()
   iquit.dec
 
