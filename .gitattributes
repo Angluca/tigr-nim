@@ -1,2 +1,1 @@
-*.c linguist-language=nim
-*.h linguist-language=nim
+* linguist-language=nim
