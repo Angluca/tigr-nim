@@ -41,12 +41,13 @@ Here's an example Hello World program. For more information, just read [tigr.nim
 ```nim
 import tigr
 
-var screen = tigrWindow(320, 240, "Hello", 0)
-while tigrClosed(screen) == 0:
-  screen.tigrClear(tigrRGB(0x80, 0x90, 0xa0))
-  screen.tigrPrint(tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff), "Hello the world!");
-  #screen.tigrUpdate() # OOP call it's OK
-  tigrUpdate(screen)
+var screen = window(320, 240, "Hello", 0)
+while screen.closed() == 0:
+  screen.clear(tigrRGB(0x80, 0x90, 0xa0))
+  screen.print(tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff), "Hello the world!");
+  #screen.update() # OOP call it's OK
+  #tigr.Update(screen) # It's OK too , function in tigr.nim
+  Update(screen) # Easy c call
 ```
 
 ## How to use TIGR

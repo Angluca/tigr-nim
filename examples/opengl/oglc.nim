@@ -22,28 +22,28 @@ void test(){
 proc test() {.importc:"$1".}
 
 var
-  win1 = tigrWindow(320, 240, "ogl #1", 0)
-  win2 = tigrWindow(320, 240, "ogl #2", 0)
+  win1 = window(320, 240, "ogl #1", 0)
+  win2 = tigr.window(320, 240, "ogl #2", 0)
 while not win1.isNil or not win2.isNil:
   if not win1.isNil:
-    tigrClear(win1, tigrRGB(0x80, 0x90, 0xa0))
-    tigrPrint(win1, tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff),
+    win1.clear(RGB(0x80, 0x90, 0xa0))
+    win1.print(tfont, 120, 110, RGB(0xff, 0xff, 0xff),
               "nimcc code -------------- #1.")
-    tigrUpdate(win1)
-    if tigrClosed(win1) != 0 or tigrKeyDown(win1, TK_ESCAPE) != 0:
-      tigrFree(win1)
+    win1.update()
+    if win1.closed() != 0 or win1.keyDown(TK_ESCAPE) != 0:
+      win1.free()
       win1 = nil
   if not win2.isNil:
-    if tigrBeginOpenGL(win2) != 0:
+    if win2.beginOpenGL() != 0:
       test() # glfn: I'm Here !!
-    tigrClear(win2, tigrRGBA(0x00, 0x00, 0x00, 0x00))
-    tigrPrint(win2, tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff),
+    win2.clear(RGBA(0x00, 0x00, 0x00, 0x00))
+    win2.print(tfont, 120, 110, RGB(0xff, 0xff, 0xff),
               "nimcc code -------------- #2.")
-    tigrUpdate(win2)
-    if tigrClosed(win2) != 0 or tigrKeyDown(win2, TK_ESCAPE) != 0:
-      tigrFree(win2)
+    win2.update()
+    if win2.closed() != 0 or win2.keyDown(TK_ESCAPE) != 0:
+      win2.free()
       win2 = nil
-if not isNil(win1):
-  tigrFree(win1)
-if not isNil(win2):
-  tigrFree(win2)
+if not win1.isNil():
+  win1.free()
+if not win2.isNil():
+  win2.free()

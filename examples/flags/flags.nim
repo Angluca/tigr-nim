@@ -1,14 +1,14 @@
 import tigr
 
 template makeDemoWindow(w, h, flags: cint): ptr Tigr =
-  tigrWindow(w, h, "flag tester", flags)
+  window(w, h, "flag tester", flags)
 
 proc drawDemoWindow(win: ptr Tigr) =
-  let lineColor {.global.} = tigrRGB(100, 100, 100)
-  win.tigrLine(0, 0, win.w - 1, win.h - 1, lineColor)
-  win.tigrLine(0, win.h - 1, win.w - 1, 0, lineColor)
-  tigrLine(win, 0, 0, win.w, win.h, tigrRGB(200, 10, 10))
-  tigrPrint(win, tfont, 5, 5, tigrRGB(20, 200, 0), "%dx%d", win.w, win.h)
+  let lineColor {.global.} = RGB(100, 100, 100)
+  win.line(0, 0, win.w - 1, win.h - 1, lineColor)
+  win.line(0, win.h - 1, win.w - 1, 0, lineColor)
+  line(win, 0, 0, win.w, win.h, RGB(200, 10, 10))
+  print(win, tfont, 5, 5, RGB(20, 200, 0), "%dx%d", win.w, win.h)
 
 type Toggle = tuple
   text: cstring
@@ -21,27 +21,27 @@ template mkTg(text: string, b, v: int, k: char, p:TPixel): Toggle =
 
 proc drawToggle(bmp: ptr Tigr, toggle: ptr Toggle, x, y, stride: cint) =
   var
-    height = tigrTextHeight(tfont, toggle.text)
-    width = tigrTextWidth(tfont, toggle.text)
+    height = textHeight(tfont, toggle.text)
+    width = textWidth(tfont, toggle.text)
 
     yOffset = stride div 2
     xOffset = width div -2
 
-  tigrPrint(bmp, tfont, x + xOffset, y + yOffset, toggle.color, toggle.text)
+  print(bmp, tfont, x + xOffset, y + yOffset, toggle.color, toggle.text)
 
   yOffset += (if toggle.checked != 0: height else: height div 3)
   var lineColor = toggle.color
   lineColor.a = 240
-  bmp.tigrLine(x + xOffset, y + yOffset, x + xOffset + width, y + yOffset, lineColor)
+  bmp.line(x + xOffset, y + yOffset, x + xOffset + width, y + yOffset, lineColor)
 
 # main
 var
   flags = 0.cint
   initialW, initialH: cint = 400
   win = makeDemoWindow(initialW, initialH, flags)
-  white = tigrRGB(0xff, 0xff, 0xff)
-  yellow = tigrRGB(0xff, 0xff, 0)
-  black = tigrRGB(0, 0, 0)
+  white = RGB(0xff, 0xff, 0xff)
+  yellow = RGB(0xff, 0xff, 0)
+  black = tigr.RGB(0, 0, 0)
   toggles = [
     mkTg("Key(A)", 0, TIGR_AUTO, 'A', white),
     mkTg("Key(R)ETINA", 0, TIGR_RETINA, 'R', white),
@@ -52,9 +52,9 @@ var
     mkTg("Key(N)OCURSOR", 0, TIGR_NOCURSOR, 'N', white),
   ]
 
-while tigrClosed(win) == 0 and
-  tigrKeyDown(win, TK_ESCAPE) == 0:
-  win.tigrClear(black)
+while closed(win) == 0 and
+  keyDown(win, TK_ESCAPE) == 0:
+  win.clear(black)
 
   win.drawDemoWindow()
   var
@@ -66,7 +66,7 @@ while tigrClosed(win) == 0 and
     var newFlags: cint
     for i in 0..<numToggles:
       let toggle = toggles[i].addr
-      if win.tigrKeyDown(toggle.key) != 0:
+      if win.keyDown(toggle.key) != 0:
         toggle.checked = toggle.checked xor 1
 
       newFlags += toggle.checked * toggle.value
@@ -80,9 +80,9 @@ while tigrClosed(win) == 0 and
         w = if modeChange: initialW else: win.w
         h = if modeChange: initialH else: win.h
       flags = newFlags
-      win.tigrFree()
+      win.free()
       win = makeDemoWindow(w, h, flags)
 
-  win.tigrUpdate()
+  win.update()
 
-win.tigrFree()
+win.free()

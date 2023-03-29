@@ -8,24 +8,24 @@ const fxShader: cstring = """
   }
 """
 
-var screen = tigrWindow(320, 240, "Shady", 0)
-screen.tigrSetPostShader(fxShader, fxShader.len - 1);
+var screen = window(320, 240, "Shady", 0)
+screen.setPostShader(fxShader, fxShader.len - 1);
 var
   duration = 1.0f
   phase = 0.0f
   iquit = 500
   p: float
-while tigrClosed(screen) == 0 and
-  tigrKeyDown(screen, TK_ESCAPE) == 0 and
+while screen.closed() == 0 and
+  screen.keyDown(TK_ESCAPE) == 0 and
   iquit > 0:
-  phase += tigrTime()
+  phase += tigr.time()
   while phase > duration:
     phase -= duration
   p = 6.28 * phase / duration
-  screen.tigrSetPostFX(p, 0, 0, 0)
-  screen.tigrClear(tigrRGB(0x80, 0x90, 0xa0))
-  screen.tigrPrint(tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff), "Shady business: " & $iquit)
-  screen.tigrUpdate()
+  screen.setPostFX(p, 0, 0, 0)
+  screen.clear(RGB(0x80, 0x90, 0xa0))
+  screen.print(tfont, 120, 110, RGB(0xff, 0xff, 0xff), "Shady business: " & $iquit)
+  screen.update()
   iquit.dec
 
-screen.tigrFree()
+screen.free()
