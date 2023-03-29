@@ -8,7 +8,7 @@ installExt = @["nim","c","h"]
 
 # Dependencies
 requires "nim >= 0.20.0"
-taskRequires "test", "opengl"
+#taskRequires "test", "opengl"
 
 task test, "Runs the test suite":
   exec "nim c -r tests/tester.nim"
