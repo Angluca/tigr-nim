@@ -21,7 +21,7 @@ int test() {
     while (win1 || win2) {
         if (win1) {
             tigrClear(win1, tigrRGB(0x80, 0x90, 0xa0));
-            tigrPrint(win1, tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff), "c code ===================== #1.");
+            tigrPrint(win1, tfont, 80, 110, tigrRGB(0xff, 0xff, 0xff), "c code ===================== #1.");
             tigrUpdate(win1);
 
             if (tigrClosed(win1) || tigrKeyDown(win1, TK_ESCAPE)) {
@@ -37,7 +37,7 @@ int test() {
             }
 
             tigrClear(win2, tigrRGBA(0x00, 0x00, 0x00, 0x00));
-            tigrPrint(win2, tfont, 120, 110, tigrRGB(0xff, 0xff, 0xff), "c code ===================== #2.");
+            tigrPrint(win2, tfont, 80, 110, tigrRGB(0xff, 0xff, 0xff), "c code ===================== #2.");
             tigrUpdate(win2);
 
             if (tigrClosed(win2) || tigrKeyDown(win2, TK_ESCAPE)) {
