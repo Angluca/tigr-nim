@@ -21,7 +21,7 @@ when defined(windows):
 elif defined(macosx):
   {.passL: "-framework OpenGL -framework Cocoa".}
 else:
-  {.passL: "-s lGLU -lGL -lX11".}
+  {.passL: "-s -lGLU -lGL -lX11".}
 from strutils import replace
 const tigrDir = currentSourcePath.replace("\\", "/")[0..^9]
 {.compile: "tigr/tigr.c", passC: "-I" & tigrDir.}
