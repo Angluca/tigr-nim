@@ -52,7 +52,7 @@ while screen.closed() == 0:
 ## How to use TIGR
 ```bash
 # first install and test
-nimble install tigr
+nimble install # or nimble install tigr
 nimble test
 ```
 ### Desktop (Windows, macOS, Linux)
