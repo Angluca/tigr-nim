@@ -3733,14 +3733,14 @@ int tigrTouch(Tigr* bmp, TigrTouchPoint* points, int maxPoints) {
     return buttons ? 1 : 0;
 }
 
-int tigrKeyDown(Tigr* bmp, TKey key) {
+int tigrKeyDown(Tigr* bmp, int key) {
     TigrInternal* win;
     assert(key < 256);
     win = tigrInternal(bmp);
     return (win->keys[key] != 0) && (win->prev[key] == 0);
 }
 
-int tigrKeyHeld(Tigr* bmp, TKey key) {
+int tigrKeyHeld(Tigr* bmp, int key) {
     TigrInternal* win;
     assert(key < 256);
     win = tigrInternal(bmp);

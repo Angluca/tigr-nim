@@ -285,8 +285,8 @@ int tigrTouch(Tigr *bmp, TigrTouchPoint* points, int maxPoints);
 // Reads the keyboard for a window.
 // Returns non-zero if a key is pressed/held.
 // tigrKeyDown tests for the initial press, tigrKeyHeld repeats each frame.
-int tigrKeyDown(Tigr *bmp, TKey key);
-int tigrKeyHeld(Tigr *bmp, TKey key);
+int tigrKeyDown(Tigr *bmp, int key);
+int tigrKeyHeld(Tigr *bmp, int key);
 
 // Reads character input for a window.
 // Returns the Unicode value of the last key pressed, or 0 if none.
