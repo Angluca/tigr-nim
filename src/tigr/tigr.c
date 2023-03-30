@@ -37,7 +37,7 @@ void tigrPosition(Tigr* bmp, int scale, int windowW, int windowH, int out[4]);
 #include <windows.h>
 #endif
 
-#if __linux__ && !__ANDROID__
+#if !defined(TIGR_HEADLESS) && __linux__ && !__ANDROID__
 #include <X11/X.h>
 #include <X11/Xlib.h>
 #endif
@@ -4374,7 +4374,7 @@ static Atom wmDeleteMessage;
 static XIM inputMethod;
 static GLXFBConfig fbConfig;
 
-PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = 0;
+static PFNGLXCREATECONTEXTATTRIBSARBPROC glXCreateContextAttribsARB = 0;
 
 static void initX11Stuff() {
     static int done = 0;
