@@ -129,24 +129,24 @@ proc clear*(bmp: ptr Tigr; color: TPixel) {.cdecl, importc: "tigrClear", header:
 
 ##  Fills a rectangular area.
 ##  No blending, no clipping.
-proc fill*(bmp: ptr Tigr; x: cint; y: cint; w: cint; h: cint; color: TPixel) {.  cdecl, importc: "tigrFill", header: vim.}
+proc fill*(bmp: ptr Tigr; x: cint; y: cint; w: cint; h: cint; color: TPixel) {.cdecl, importc: "tigrFill", header: vim.}
 
 ##  Draws a line.
 ##  Start pixel is drawn, end pixel is not.
 ##  Clips and blends.
-proc line*(bmp: ptr Tigr; x0: cint; y0: cint; x1: cint; y1: cint; color: TPixel) {.  cdecl, importc: "tigrLine", header: vim.}
+proc line*(bmp: ptr Tigr; x0: cint; y0: cint; x1: cint; y1: cint; color: TPixel) {.cdecl, importc: "tigrLine", header: vim.}
 
 ##  Draws an empty rectangle.
 ##  Drawing a 1x1 rectangle yields the same result as calling tigrPlot.
 ##  Clips and blends.
-proc rect*(bmp: ptr Tigr; x: cint; y: cint; w: cint; h: cint; color: TPixel) {.  cdecl, importc: "tigrRect", header: vim.}
+proc rect*(bmp: ptr Tigr; x: cint; y: cint; w: cint; h: cint; color: TPixel) {.cdecl, importc: "tigrRect", header: vim.}
 
 ##  Fills a rectangle.
 ##  Fills the inside of the specified rectangular area.
 ##  Calling tigrRect followed by tigrFillRect using the same arguments
 ##  causes no overdrawing.
 ##  Clips and blends.
-proc fillRect*(bmp: ptr Tigr; x: cint; y: cint; w: cint; h: cint; color: TPixel) {.  cdecl, importc: "tigrFillRect", header: vim.}
+proc fillRect*(bmp: ptr Tigr; x: cint; y: cint; w: cint; h: cint; color: TPixel) {.cdecl, importc: "tigrFillRect", header: vim.}
 
 ##  Draws a circle.
 ##  Drawing a zero radius circle yields the same result as calling tigrPlot.
@@ -160,7 +160,7 @@ proc circle*(bmp: ptr Tigr; x: cint; y: cint; r: cint; color: TPixel) {.cdecl, i
 ##  causes no overdrawing.
 ##  Filling a circle with zero radius has no effect.
 ##  Clips and blends.
-proc fillCircle*(bmp: ptr Tigr; x: cint; y: cint; r: cint; color: TPixel) {.  cdecl, importc: "tigrFillCircle", header: vim.}
+proc fillCircle*(bmp: ptr Tigr; x: cint; y: cint; r: cint; color: TPixel) {.cdecl, importc: "tigrFillCircle", header: vim.}
 
 ##  Sets clip rect.
 ##  Set to (0, 0, -1, -1) to reset clipping to full bitmap.
