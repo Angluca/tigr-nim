@@ -1,6 +1,6 @@
 import tigr
 
-template makeDemoWindow(w, h, flags: cint): ptr Tigr =
+template makeDemoWindow(w, h, flags: int): ptr Tigr =
   window(w, h, "flag tester", flags)
 
 proc drawDemoWindow(win: ptr Tigr) =
@@ -10,16 +10,17 @@ proc drawDemoWindow(win: ptr Tigr) =
   line(win, 0, 0, win.w, win.h, RGB(200, 10, 10))
   print(win, tfont, 5, 5, RGB(20, 200, 0), "%dx%d", win.w, win.h)
 
+var aaaa:int = 100.cint
 type Toggle = tuple
   text: cstring
-  checked: cint
-  value: cint
-  key: cint
+  checked: int
+  value: int
+  key: int
   color: TPixel
 template mkTg(text: string, b, v: int, k: char, p:TPixel): Toggle =
-  (text.cstring,b.cint, v.cint, k.cint, p)
+  (text.cstring,b, v, k.ord, p)
 
-proc drawToggle(bmp: ptr Tigr, toggle: ptr Toggle, x, y, stride: cint) =
+proc drawToggle(bmp: ptr Tigr, toggle: ptr Toggle, x, y, stride: int) =
   var
     height = textHeight(tfont, toggle.text)
     width = textWidth(tfont, toggle.text)
@@ -36,8 +37,8 @@ proc drawToggle(bmp: ptr Tigr, toggle: ptr Toggle, x, y, stride: cint) =
 
 # main
 var
-  flags = 0.cint
-  initialW, initialH: cint = 400
+  flags = 0
+  initialW, initialH = 400
   win = makeDemoWindow(initialW, initialH, flags)
   white = RGB(0xff, 0xff, 0xff)
   yellow = RGB(0xff, 0xff, 0)
@@ -59,11 +60,11 @@ while closed(win) == 0 and
   win.drawDemoWindow()
   var
     numToggles = toggles.sizeof div toggles[0].sizeof
-    stepY = win.h div numToggles.cint
-    toggleY: cint
+    stepY = win.h div numToggles
+    toggleY = 0
     toggleX = win.w div 2
   block:
-    var newFlags: cint
+    var newFlags = 0
     for i in 0..<numToggles:
       let toggle = toggles[i].addr
       if win.keyDown(toggle.key) != 0:

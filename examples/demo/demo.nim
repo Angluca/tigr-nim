@@ -17,15 +17,15 @@ proc myUpdate(dt: float) =
 
   # Read the keyboard and move the player.
   if (standing or jumps < 2) and ((keyDown(screen, TK_SPACE)!=0) or
-    (keyDown(screen, 'W'.ord)!=0)):
+    (keyDown(screen, 'W')!=0)):
     playerys -= (200 - jumps * 50).float
     jumps.inc
-  elif screen.keyDown(TK_DOWN)!=0 or keyHeld(screen, 'S'.ord)!=0:
+  elif screen.keyDown(TK_DOWN)!=0 or keyHeld(screen, 'S')!=0:
     if standing: jumps = -1
     playerys += 20
-  if screen.keyDown(TK_LEFT)!=0 or keyHeld(screen, 'A'.ord)!=0:
+  if screen.keyDown(TK_LEFT)!=0 or keyHeld(screen, 'A')!=0:
     playerxs -= 10
-  elif screen.keyDown(TK_RIGHT)!=0 or keyHeld(screen, 'D'.ord)!=0:
+  elif screen.keyDown(TK_RIGHT)!=0 or keyHeld(screen, 'D')!=0:
     playerxs += 10
 
   var oldx = playerx; var oldy = playery
@@ -53,10 +53,10 @@ proc myUpdate(dt: float) =
     dy = (playery - oldy) / 10
   standing = false
   for i in 0..<10:
-    var p = get(backdrop, oldx.cint, oldy.cint - 1)
+    var p = get(backdrop, oldx, oldy - 1)
     if p.r == 0 and p.g == 0 and p.b == 0:
       oldy -= 1
-    p = get(backdrop, oldx.cint, oldy.cint)
+    p = get(backdrop, oldx, oldy)
     if p.r == 0 and p.g == 0 and p.b == 0 and playerys > 0:
       standing = true
       if jumps < 0: oldy += 2
@@ -75,7 +75,7 @@ proc main() =
   if squinkle.isNil: error(nil, "Cant load squinkle.png")
 
   # Load some UTF8 text
-  let greeting = cast[cstring](readFile("greeting.txt", nil))
+  let greeting = readFile("greeting.txt", nil)
   if greeting.isNil: error(nil, "Cant load greeting.txt")
 
   # Make a window and an off-screen backdrop
@@ -93,11 +93,11 @@ proc main() =
 
   # Maintain a list of characters entered.
   var chars: array[16, char]
-  c_memset(chars[0].addr, '_'.cint, 16)
+  c_memset(chars[0].addr, '_', 16)
   var
     dt: float
-    x, y, b: cint
-    prevx, prevy, prev: cint
+    x, y, b: int
+    prevx, prevy, prev: int
 
   # Repeat till they close the window.
   while screen.closed() == 0 and
@@ -116,7 +116,7 @@ proc main() =
 
     # Composite the backdrop and sprite onto the screen.
     screen.blit(backdrop, 0, 0, 0, 0, backdrop.w, backdrop.h)
-    screen.blitAlpha(squinkle, playerx.cint - squinkle.w div 2, playery.cint - squinkle.h, 0, 0, squinkle.w, squinkle.h, 1.0f)
+    screen.blitAlpha(squinkle, playerx - squinkle.w div 2, playery - squinkle.h, 0, 0, squinkle.w, squinkle.h, 1.0f)
     screen.print(tfont, 10, 10, RGBA(0xc0, 0xd0, 0xff, 0xc0), greeting)
     screen.print(tfont, 10, 222, RGBA(0xff, 0xff, 0xff, 0xff), "W A S D + SPACE")
 
@@ -133,9 +133,9 @@ proc main() =
     # Print out the character buffer too.
     var
       tmp {.global.} : array[100, char]
-      p = cast[cstring](tmp[0].addr)
+      p: cstring = tmp[0].addr
     for n in 0..<16:
-      p = encodeUTF8(p, chars[n].cint)
+      p = encodeUTF8(p, chars[n])
     screen.print(tfont, 160, 222, RGB(0xff, 0xff, 0xff), "Chars: %s", tmp[0].addr)
     zeroMem(tmp[0].addr, tmp.sizeof)
 

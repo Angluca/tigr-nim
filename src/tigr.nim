@@ -293,9 +293,9 @@ proc touch*(bmp: ptr Tigr; points: ptr TigrTouchPoint; maxPoints: cint): cint {.
 ##  Reads the keyboard for a window.
 ##  Returns non-zero if a key is pressed/held.
 ##  tigrKeyDown tests for the initial press, tigrKeyHeld repeats each frame.
-proc keyDown*(bmp: ptr Tigr; key: TKey|cint): cint {.cdecl, importc: "tigrKeyDown", header: vim.}
+proc keyDown*(bmp: ptr Tigr; key: cint): cint {.cdecl, importc: "tigrKeyDown", header: vim.}
 
-proc keyHeld*(bmp: ptr Tigr; key: TKey|cint): cint {.cdecl, importc: "tigrKeyHeld", header: vim.}
+proc keyHeld*(bmp: ptr Tigr; key: cint): cint {.cdecl, importc: "tigrKeyHeld", header: vim.}
 
 ##  Reads character input for a window.
 ##  Returns the Unicode value of the last key pressed, or 0 if none.
@@ -345,3 +345,13 @@ proc decodeUTF8*(text: cstring; cp: pointer): cstring {.cdecl,
 
 ##  Encodes a single UTF8 codepoint and returns the next pointer.
 proc encodeUTF8*(text: cstring; cp: cint): cstring {.cdecl, importc: "tigrEncodeUTF8", header: vim.}
+
+# converts
+converter num2key*(n: SomeInteger|char): TKey = n.TKey
+converter num2ci*(n: SomeNumber|char|enum): cint = n.cint
+converter num2cf*(n: int): cfloat = n.cfloat
+converter num2str*(n: SomeNumber): string = $n
+converter s2cstr*(n: string): cstring = n.cstring
+converter p2cstr*(p: pointer|ptr): cstring = cast[cstring](p)
+converter sz2cstr*(sz: array|UncheckedArray): cstring = cast[cstring](sz[0].addr)
+
