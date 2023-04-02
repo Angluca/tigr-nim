@@ -347,11 +347,14 @@ proc decodeUTF8*(text: cstring; cp: pointer): cstring {.cdecl,
 proc encodeUTF8*(text: cstring; cp: cint): cstring {.cdecl, importc: "tigrEncodeUTF8", header: vim.}
 
 # converts
-converter num2key*(n: SomeInteger|char): TKey = n.TKey
-converter num2ci*(n: SomeNumber|char|enum): cint = n.cint
-converter num2cf*(n: int): cfloat = n.cfloat
-converter num2str*(n: SomeNumber): string = $n
-converter s2cstr*(n: string): cstring = n.cstring
+converter n2b*(n: SomeInteger): bool = (n!=0)
+converter n2key*(n: SomeInteger|char): TKey = n.TKey
+converter n2ci*(n: SomeNumber|char|enum): cint = n.cint
+converter n2cf*(n: int): cfloat = n.cfloat
+converter n2str*(n: SomeNumber): string = $n
+converter s2cstr*(s: string): cstring = s.cstring
 converter p2cstr*(p: pointer|ptr): cstring = cast[cstring](p)
+converter sz2pt*(sz: array|UncheckedArray): pointer = sz[0].addr
 converter sz2cstr*(sz: array|UncheckedArray): cstring = cast[cstring](sz[0].addr)
+
 

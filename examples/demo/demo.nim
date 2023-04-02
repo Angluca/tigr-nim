@@ -16,16 +16,16 @@ proc myUpdate(dt: float) =
     remaining -= dt
 
   # Read the keyboard and move the player.
-  if (standing or jumps < 2) and ((keyDown(screen, TK_SPACE)!=0) or
-    (keyDown(screen, 'W')!=0)):
+  if (standing or jumps < 2) and ((keyDown(screen, TK_SPACE)) or
+    (keyDown(screen, 'W'))):
     playerys -= (200 - jumps * 50).float
     jumps.inc
-  elif screen.keyDown(TK_DOWN)!=0 or keyHeld(screen, 'S')!=0:
+  elif screen.keyDown(TK_DOWN) or keyHeld(screen, 'S'):
     if standing: jumps = -1
     playerys += 20
-  if screen.keyDown(TK_LEFT)!=0 or keyHeld(screen, 'A')!=0:
+  if screen.keyDown(TK_LEFT) or keyHeld(screen, 'A'):
     playerxs -= 10
-  elif screen.keyDown(TK_RIGHT)!=0 or keyHeld(screen, 'D')!=0:
+  elif screen.keyDown(TK_RIGHT) or keyHeld(screen, 'D'):
     playerxs += 10
 
   var oldx = playerx; var oldy = playery
@@ -93,7 +93,7 @@ proc main() =
 
   # Maintain a list of characters entered.
   var chars: array[16, char]
-  c_memset(chars[0].addr, '_', 16)
+  c_memset(chars, '_', 16)
   var
     dt: float
     x, y, b: int
@@ -109,7 +109,7 @@ proc main() =
     # Read the mouse and draw when pressed.
     screen.mouse(x.addr, y.addr, b.addr)
     if (b and 1) > 0:
-      if prev != 0:
+      if prev :
         line(backdrop, prevx, prevy, x, y, RGB(0, 0, 0))
       prevx = x; prevy = y; prev = 1
     else: prev = 0
@@ -132,8 +132,8 @@ proc main() =
 
     # Print out the character buffer too.
     var
-      tmp {.global.} : array[100, char]
-      p: cstring = tmp[0].addr
+      tmp {.global.} : array[128, char]
+      p: cstring = tmp
     for n in 0..<16:
       p = encodeUTF8(p, chars[n])
     screen.print(tfont, 160, 222, RGB(0xff, 0xff, 0xff), "Chars: %s", tmp[0].addr)
