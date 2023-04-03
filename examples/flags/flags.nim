@@ -30,7 +30,7 @@ proc drawToggle(bmp: ptr Tigr, toggle: ptr Toggle, x, y, stride: int) =
 
   print(bmp, tfont, x + xOffset, y + yOffset, toggle.color, toggle.text)
 
-  yOffset += (if toggle.checked: height else: height div 3)
+  yOffset += (if toggle.checked!=0: height else: height div 3)
   var lineColor = toggle.color
   lineColor.a = 240
   bmp.line(x + xOffset, y + yOffset, x + xOffset + width, y + yOffset, lineColor)
@@ -67,7 +67,7 @@ while closed(win) == 0 and
     var newFlags = 0
     for i in 0..<numToggles:
       let toggle = toggles[i].addr
-      if win.keyDown(toggle.key):
+      if win.keyDown(toggle.key)!=0:
         toggle.checked = toggle.checked xor 1
 
       newFlags += toggle.checked * toggle.value

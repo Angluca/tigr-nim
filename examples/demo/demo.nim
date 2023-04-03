@@ -16,16 +16,16 @@ proc myUpdate(dt: float) =
     remaining -= dt
 
   # Read the keyboard and move the player.
-  if (standing or jumps < 2) and ((keyDown(screen, TK_SPACE)) or
-    (keyDown(screen, 'W'))):
+  if (standing or jumps < 2) and ((keyDown(screen, TK_SPACE)!=0) or
+    (keyDown(screen, 'W')!=0)):
     playerys -= (200 - jumps * 50).float
     jumps.inc
-  elif screen.keyDown(TK_DOWN) or keyHeld(screen, 'S'):
+  elif screen.keyDown(TK_DOWN)!=0 or keyHeld(screen, 'S')!=0:
     if standing: jumps = -1
     playerys += 20
-  if screen.keyDown(TK_LEFT) or keyHeld(screen, 'A'):
+  if screen.keyDown(TK_LEFT)!=0 or keyHeld(screen, 'A')!=0:
     playerxs -= 10
-  elif screen.keyDown(TK_RIGHT) or keyHeld(screen, 'D'):
+  elif screen.keyDown(TK_RIGHT)!=0 or keyHeld(screen, 'D')!=0:
     playerxs += 10
 
   var oldx = playerx; var oldy = playery
@@ -109,7 +109,7 @@ proc main() =
     # Read the mouse and draw when pressed.
     screen.mouse(x.addr, y.addr, b.addr)
     if (b and 1) > 0:
-      if prev :
+      if prev != 0:
         line(backdrop, prevx, prevy, x, y, RGB(0, 0, 0))
       prevx = x; prevy = y; prev = 1
     else: prev = 0
