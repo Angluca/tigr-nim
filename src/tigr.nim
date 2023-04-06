@@ -351,7 +351,6 @@ proc decodeUTF8*(text: cstring; cp: ptr int): cstring {.cdecl,
 proc encodeUTF8*(text: cstring; cp: tcint): cstring {.cdecl, importc: "tigrEncodeUTF8", header: vim.}
 
 # converts
-converter n2tkey*(n: SomeInteger|char): TKey = n.TKey
 converter n2tcui*(n: SomeNumber|char|enum): tcuint = n.cuint
 converter n2tci*(n: SomeNumber|char|enum): tcint = n.cint
 converter n2tcf*(n: int): tcfloat = n.cfloat
