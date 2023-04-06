@@ -350,7 +350,6 @@ proc encodeUTF8*(text: cstring; cp: cint): cstring {.cdecl, importc: "tigrEncode
 converter n2key*(n: SomeInteger|char): TKey = n.TKey
 converter n2ci*(n: SomeNumber|char|enum): cint = n.cint
 converter n2cf*(n: int): cfloat = n.cfloat
-#converter n2str*(n: SomeNumber): string = $n
 #converter p2cstr*(p: pointer|ptr): cstring = cast[cstring](p)
 #converter sz2pt*(sz: array|UncheckedArray): pointer = sz[0].addr
 #converter sz2cstr*(sz: array|UncheckedArray): cstring = cast[cstring](sz[0].addr)
