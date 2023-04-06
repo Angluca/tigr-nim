@@ -279,7 +279,7 @@ type
 
 
 ##  Returns mouse input for a window.
-proc mouse*(bmp: ptr Tigr; x: pointer; y: pointer; buttons: pointer) {.cdecl, importc: "tigrMouse", header: vim.}
+proc mouse*(bmp: ptr Tigr; x: ptr int; y: ptr int; buttons: ptr int) {.cdecl, importc: "tigrMouse", header: vim.}
 
 type
   TigrTouchPoint* {.importc: "TigrTouchPoint", header: vim, bycopy.} = object
@@ -333,14 +333,14 @@ proc error*(bmp: ptr Tigr; message: cstring) {.varargs, cdecl,
 ##  On error, returns NULL and sets errno.
 ##  TIGR will automatically append a NUL terminator byte
 ##  to the end (not included in the length)
-proc readFile*(fileName: cstring; length: pointer): cstring {.cdecl, importc: "tigrReadFile", header: vim.}
+proc readFile*(fileName: cstring; length: ptr int): cstring {.cdecl, importc: "tigrReadFile", header: vim.}
 
 ##  Decompresses DEFLATEd zip/zlib data into a buffer.
 ##  Returns non-zero on success.
 proc inflate*(`out`: pointer; outlen: cuint; `in`: pointer; inlen: cuint): cint {.cdecl, importc: "tigrInflate", header: vim.}
 
 ##  Decodes a single UTF8 codepoint and returns the next pointer.
-proc decodeUTF8*(text: cstring; cp: pointer): cstring {.cdecl,
+proc decodeUTF8*(text: cstring; cp: ptr int): cstring {.cdecl,
     importc: "tigrDecodeUTF8", header: vim.}
 
 ##  Encodes a single UTF8 codepoint and returns the next pointer.
