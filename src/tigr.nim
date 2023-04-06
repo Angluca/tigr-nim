@@ -29,9 +29,9 @@ const vim = "tigr/tigr.h"
 
 ##  Bitmaps ----------------------------------------------------------------
 type
-  TInt = cint
-  TUInt = cuint
-  TFloat = cfloat
+  tcint = cint
+  tcuint = cuint
+  tcfloat = cfloat
 ##  This struct contains one pixel.
 type
   TPixel* {.importc: "TPixel", header: vim, bycopy.} = object
@@ -54,19 +54,19 @@ const
 ##  A Tigr bitmap.
 type
   Tigr* {.importc: "Tigr", header: vim, bycopy.} = object
-    w* {.importc: "w".}: TInt
-    h* {.importc: "h".}: TInt
+    w* {.importc: "w".}: tcint
+    h* {.importc: "h".}: tcint
     ##  width/height (unscaled)
-    cx* {.importc: "cx".}: TInt
-    cy* {.importc: "cy".}: TInt
-    cw* {.importc: "cw".}: TInt
-    ch* {.importc: "ch".}: TInt
+    cx* {.importc: "cx".}: tcint
+    cy* {.importc: "cy".}: tcint
+    cw* {.importc: "cw".}: tcint
+    ch* {.importc: "ch".}: tcint
     ##  clip rect
     pix* {.importc: "pix".}: ptr TPixel
     ##  pixel data
     handle* {.importc: "handle".}: pointer
     ##  OS window handle, NULL for off-screen bitmaps.
-    blitMode* {.importc: "blitMode".}: TInt
+    blitMode* {.importc: "blitMode".}: tcint
     ##  Target bitmap blit mode
 
 ##  Creates a new empty window with a given bitmap size.
@@ -86,27 +86,27 @@ type
 ##  this means that the Tigr bitmap will change size if the window is moved between
 ##  retina and non-retina screens.
 ##
-proc window*(w: TInt; h: TInt; title: cstring; flags: TInt): ptr Tigr {.cdecl, importc: "tigrWindow", header: vim.}
+proc window*(w: tcint; h: tcint; title: cstring; flags: tcint): ptr Tigr {.cdecl, importc: "tigrWindow", header: vim.}
 
 ##  Creates an empty off-screen bitmap.
-proc bitmap*(w: TInt; h: TInt): ptr Tigr {.cdecl, importc: "tigrBitmap", header: vim.}
+proc bitmap*(w: tcint; h: tcint): ptr Tigr {.cdecl, importc: "tigrBitmap", header: vim.}
 
 ##  Deletes a window/bitmap.
 proc free*(bmp: ptr Tigr) {.cdecl, importc: "tigrFree", header: vim.}
 
 ##  Returns non-zero if the user requested to close a window.
-proc closed*(bmp: ptr Tigr): TInt {.cdecl, importc: "tigrClosed", header: vim.}
+proc closed*(bmp: ptr Tigr): tcint {.cdecl, importc: "tigrClosed", header: vim.}
 
 ##  Displays a window's contents on-screen and updates input.
 proc update*(bmp: ptr Tigr) {.cdecl, importc: "tigrUpdate", header: vim.}
 
 ##  Called before doing direct OpenGL calls and before tigrUpdate.
 ##  Returns non-zero if OpenGL is available.
-proc beginOpenGL*(bmp: ptr Tigr): TInt {.cdecl, importc: "tigrBeginOpenGL", header: vim.}
+proc beginOpenGL*(bmp: ptr Tigr): tcint {.cdecl, importc: "tigrBeginOpenGL", header: vim.}
 
 ##  Sets post shader for a window.
 ##  This replaces the built-in post-FX shader.
-proc setPostShader*(bmp: ptr Tigr; code: cstring; size: TInt) {.cdecl, importc: "tigrSetPostShader", header: vim.}
+proc setPostShader*(bmp: ptr Tigr; code: cstring; size: tcint) {.cdecl, importc: "tigrSetPostShader", header: vim.}
 
 ##  Sets post-FX properties for a window.
 ##
@@ -115,17 +115,17 @@ proc setPostShader*(bmp: ptr Tigr; code: cstring; size: TInt) {.cdecl, importc: 
 ##  p2: vblur - use bilinear filtering along the y-axis (pixels)
 ##  p3: scanlines - CRT scanlines effect (0-1)
 ##  p4: contrast - contrast boost (1 = no change, 2 = 2X contrast, etc)
-proc setPostFX*(bmp: ptr Tigr; p1: TFloat; p2: TFloat; p3: TFloat; p4: TFloat) {.cdecl, importc: "tigrSetPostFX", header: vim.}
+proc setPostFX*(bmp: ptr Tigr; p1: tcfloat; p2: tcfloat; p3: tcfloat; p4: tcfloat) {.cdecl, importc: "tigrSetPostFX", header: vim.}
 
 ##  Drawing ----------------------------------------------------------------
 ##  Helper for reading pixels.
 ##  For high performance, just access bmp->pix directly.
-proc get*(bmp: ptr Tigr; x: TInt; y: TInt): TPixel {.cdecl, importc: "tigrGet", header: vim.}
+proc get*(bmp: ptr Tigr; x: tcint; y: tcint): TPixel {.cdecl, importc: "tigrGet", header: vim.}
 
 ##  Plots a pixel.
 ##  Clips and blends.
 ##  For high performance, just access bmp->pix directly.
-proc plot*(bmp: ptr Tigr; x: TInt; y: TInt; pix: TPixel) {.cdecl, importc: "tigrPlot", header: vim.}
+proc plot*(bmp: ptr Tigr; x: tcint; y: tcint; pix: TPixel) {.cdecl, importc: "tigrPlot", header: vim.}
 
 ##  Clears a bitmap to a color.
 ##  No blending, no clipping.
@@ -133,30 +133,30 @@ proc clear*(bmp: ptr Tigr; color: TPixel) {.cdecl, importc: "tigrClear", header:
 
 ##  Fills a rectangular area.
 ##  No blending, no clipping.
-proc fill*(bmp: ptr Tigr; x: TInt; y: TInt; w: TInt; h: TInt; color: TPixel) {.cdecl, importc: "tigrFill", header: vim.}
+proc fill*(bmp: ptr Tigr; x: tcint; y: tcint; w: tcint; h: tcint; color: TPixel) {.cdecl, importc: "tigrFill", header: vim.}
 
 ##  Draws a line.
 ##  Start pixel is drawn, end pixel is not.
 ##  Clips and blends.
-proc line*(bmp: ptr Tigr; x0: TInt; y0: TInt; x1: TInt; y1: TInt; color: TPixel) {.cdecl, importc: "tigrLine", header: vim.}
+proc line*(bmp: ptr Tigr; x0: tcint; y0: tcint; x1: tcint; y1: tcint; color: TPixel) {.cdecl, importc: "tigrLine", header: vim.}
 
 ##  Draws an empty rectangle.
 ##  Drawing a 1x1 rectangle yields the same result as calling tigrPlot.
 ##  Clips and blends.
-proc rect*(bmp: ptr Tigr; x: TInt; y: TInt; w: TInt; h: TInt; color: TPixel) {.cdecl, importc: "tigrRect", header: vim.}
+proc rect*(bmp: ptr Tigr; x: tcint; y: tcint; w: tcint; h: tcint; color: TPixel) {.cdecl, importc: "tigrRect", header: vim.}
 
 ##  Fills a rectangle.
 ##  Fills the inside of the specified rectangular area.
 ##  Calling tigrRect followed by tigrFillRect using the same arguments
 ##  causes no overdrawing.
 ##  Clips and blends.
-proc fillRect*(bmp: ptr Tigr; x: TInt; y: TInt; w: TInt; h: TInt; color: TPixel) {.cdecl, importc: "tigrFillRect", header: vim.}
+proc fillRect*(bmp: ptr Tigr; x: tcint; y: tcint; w: tcint; h: tcint; color: TPixel) {.cdecl, importc: "tigrFillRect", header: vim.}
 
 ##  Draws a circle.
 ##  Drawing a zero radius circle yields the same result as calling tigrPlot.
 ##  Drawing a circle with radius one draws a circle three pixels wide.
 ##  Clips and blends.
-proc circle*(bmp: ptr Tigr; x: TInt; y: TInt; r: TInt; color: TPixel) {.cdecl, importc: "tigrCircle", header: vim.}
+proc circle*(bmp: ptr Tigr; x: tcint; y: tcint; r: tcint; color: TPixel) {.cdecl, importc: "tigrCircle", header: vim.}
 
 ##  Fills a circle.
 ##  Fills the inside of the specified circle.
@@ -164,11 +164,11 @@ proc circle*(bmp: ptr Tigr; x: TInt; y: TInt; r: TInt; color: TPixel) {.cdecl, i
 ##  causes no overdrawing.
 ##  Filling a circle with zero radius has no effect.
 ##  Clips and blends.
-proc fillCircle*(bmp: ptr Tigr; x: TInt; y: TInt; r: TInt; color: TPixel) {.cdecl, importc: "tigrFillCircle", header: vim.}
+proc fillCircle*(bmp: ptr Tigr; x: tcint; y: tcint; r: tcint; color: TPixel) {.cdecl, importc: "tigrFillCircle", header: vim.}
 
 ##  Sets clip rect.
 ##  Set to (0, 0, -1, -1) to reset clipping to full bitmap.
-proc clip*(bmp: ptr Tigr; cx: TInt; cy: TInt; cw: TInt; ch: TInt) {.cdecl, importc: "tigrClip", header: vim.}
+proc clip*(bmp: ptr Tigr; cx: tcint; cy: tcint; cw: tcint; ch: tcint) {.cdecl, importc: "tigrClip", header: vim.}
 
 ##  Copies bitmap data.
 ##  dx/dy = dest co-ordinates
@@ -177,7 +177,7 @@ proc clip*(bmp: ptr Tigr; cx: TInt; cy: TInt; cw: TInt; ch: TInt) {.cdecl, impor
 ##
 ##  RGBAdest = RGBAsrc
 ##  Clips, does not blend.
-proc blit*(dest: ptr Tigr; src: ptr Tigr; dx: TInt; dy: TInt; sx: TInt; sy: TInt; w: TInt; h: TInt) {.cdecl, importc: "tigrBlit", header: vim.}
+proc blit*(dest: ptr Tigr; src: ptr Tigr; dx: tcint; dy: tcint; sx: tcint; sy: tcint; w: tcint; h: tcint) {.cdecl, importc: "tigrBlit", header: vim.}
 
 ##  Same as tigrBlit, but alpha blends the source bitmap with the
 ##  target using per pixel alpha and the specified global alpha.
@@ -191,14 +191,14 @@ proc blit*(dest: ptr Tigr; src: ptr Tigr; dx: TInt; dy: TInt; sx: TInt; sy: TInt
 ##  Blit mode == TIGR_BLEND_ALPHA:
 ##  Adest = Asrc * Ablend + Adest * (1 - Ablend)
 ##  Clips and blends.
-proc blitAlpha*(dest: ptr Tigr; src: ptr Tigr; dx: TInt; dy: TInt; sx: TInt; sy: TInt; w: TInt; h: TInt; alpha: TFloat) {.cdecl, importc: "tigrBlitAlpha", header: vim.}
-##  Same as tigrBlit, but TInts the source bitmap with a color
+proc blitAlpha*(dest: ptr Tigr; src: ptr Tigr; dx: tcint; dy: tcint; sx: tcint; sy: tcint; w: tcint; h: tcint; alpha: tcfloat) {.cdecl, importc: "tigrBlitAlpha", header: vim.}
+##  Same as tigrBlit, but tcints the source bitmap with a color
 ##  and alpha blends the resulting source with the destination.
 ##
-##  Rblend = Rsrc * RTInt
-##  Gblend = Gsrc * GTInt
-##  Bblend = Bsrc * BTInt
-##  Ablend = Asrc * ATInt
+##  Rblend = Rsrc * Rtcint
+##  Gblend = Gsrc * Gtcint
+##  Bblend = Bsrc * Btcint
+##  Ablend = Asrc * Atcint
 ##
 ##  RGBdest = RGBblend * Ablend + RGBdest * (1 - Ablend)
 ##
@@ -208,15 +208,15 @@ proc blitAlpha*(dest: ptr Tigr; src: ptr Tigr; dx: TInt; dy: TInt; sx: TInt; sy:
 ##  Blit mode == TIGR_BLEND_ALPHA:
 ##  Adest = Ablend * Ablend + Adest * (1 - Ablend)
 ##  Clips and blends.
-proc blitTInt*(dest: ptr Tigr; src: ptr Tigr; dx: TInt; dy: TInt; sx: TInt; sy: TInt; w: TInt; h: TInt; TInt: TPixel) {.cdecl, importc: "tigrBlitTInt", header: vim.}
+proc blittcint*(dest: ptr Tigr; src: ptr Tigr; dx: tcint; dy: tcint; sx: tcint; sy: tcint; w: tcint; h: tcint; tcint: TPixel) {.cdecl, importc: "tigrBlittcint", header: vim.}
 type
-  TIGRBlitMode* {.size: sizeof(TInt).} = enum
+  TIGRBlitMode* {.size: sizeof(tcint).} = enum
     TIGR_KEEP_ALPHA = 0,    ##  Keep destination alpha value
     TIGR_BLEND_ALPHA = 1     ##  Blend destination alpha (default)
 
 
 ##  Set destination bitmap blend mode for blit operations.
-proc blitMode*(dest: ptr Tigr; mode: TInt) {.cdecl, importc: "tigrBlitMode", header: vim.}
+proc blitMode*(dest: ptr Tigr; mode: tcint) {.cdecl, importc: "tigrBlitMode", header: vim.}
 
 ##  Helper for making colors.
 proc RGB*(r: byte; g: byte; b: byte): TPixel {.inline, cdecl, importc: "tigrRGB".}
@@ -228,15 +228,15 @@ proc RGBA*(r: byte; g: byte; b: byte; a: byte): TPixel {.inline, cdecl, importc:
 
 type
   TigrGlyph* {.importc: "TigrGlyph", header: vim, bycopy.} = object
-    code* {.importc: "code".}: TInt
-    x* {.importc: "x".}: TInt
-    y* {.importc: "y".}: TInt
-    w* {.importc: "w".}: TInt
-    h* {.importc: "h".}: TInt
+    code* {.importc: "code".}: tcint
+    x* {.importc: "x".}: tcint
+    y* {.importc: "y".}: tcint
+    w* {.importc: "w".}: tcint
+    h* {.importc: "h".}: tcint
 
   TigrFont* {.importc: "TigrFont", header: vim, bycopy.} = object
     bitmap* {.importc: "bitmap".}: ptr Tigr
-    numGlyphs* {.importc: "numGlyphs".}: TInt
+    numGlyphs* {.importc: "numGlyphs".}: tcint
     glyphs* {.importc: "glyphs".}: ptr TigrGlyph
 
 ##  Loads a font. The font bitmap should contain all characters
@@ -244,7 +244,7 @@ type
 ##  Supported codepages:
 ##      0    - Regular 7-bit ASCII
 ##      1252 - Windows 1252
-proc loadFont*(bitmap: ptr Tigr; codepage: TInt): ptr TigrFont {.cdecl,
+proc loadFont*(bitmap: ptr Tigr; codepage: tcint): ptr TigrFont {.cdecl,
     importc: "tigrLoadFont", header: vim.}
 
 ##  Frees a font.
@@ -253,14 +253,14 @@ proc freeFont*(font: ptr TigrFont) {.cdecl, importc: "tigrFreeFont", header: vim
 ##  Prints UTF-8 text onto a bitmap.
 ##  NOTE:
 ##   This uses the target bitmap blit mode.
-##   See tigrBlitTInt for details.
-proc print*(dest: ptr Tigr; font: ptr TigrFont; x: TInt; y: TInt; color: TPixel; text: cstring) {.varargs, cdecl, importc: "tigrPrint", header: vim.}
+##   See tigrBlittcint for details.
+proc print*(dest: ptr Tigr; font: ptr TigrFont; x: tcint; y: tcint; color: TPixel; text: cstring) {.varargs, cdecl, importc: "tigrPrint", header: vim.}
 
 ##  Returns the width/height of a string.
-proc textWidth*(font: ptr TigrFont; text: cstring): TInt {.cdecl,
+proc textWidth*(font: ptr TigrFont; text: cstring): tcint {.cdecl,
     importc: "tigrTextWidth", header: vim.}
 
-proc textHeight*(font: ptr TigrFont; text: cstring): TInt {.cdecl,
+proc textHeight*(font: ptr TigrFont; text: cstring): tcint {.cdecl,
     importc: "tigrTextHeight", header: vim.}
 
 ##  The built-in font.
@@ -269,7 +269,7 @@ var tfont* {.header: vim.}: ptr TigrFont
 ##  User Input -------------------------------------------------------------
 ##  Key scancodes. For letters/numbers, use ASCII ('A'-'Z' and '0'-'9').
 type
-  TKey* {.size: sizeof(TInt).} = enum
+  TKey* {.size: sizeof(tcint).} = enum
     TK_PAD0 = 128, TK_PAD1, TK_PAD2, TK_PAD3, TK_PAD4, TK_PAD5, TK_PAD6,
     TK_PAD7, TK_PAD8, TK_PAD9, TK_PADMUL, TK_PADADD, TK_PADENTER, TK_PADSUB,
     TK_PADDOT, TK_PADDIV, TK_F1, TK_F2, TK_F3, TK_F4, TK_F5, TK_F6, TK_F7,
@@ -287,45 +287,45 @@ proc mouse*(bmp: ptr Tigr; x: ptr int; y: ptr int; buttons: ptr int) {.cdecl, im
 
 type
   TigrTouchPoint* {.importc: "TigrTouchPoint", header: vim, bycopy.} = object
-    x* {.importc: "x".}: TInt
-    y* {.importc: "y".}: TInt
+    x* {.importc: "x".}: tcint
+    y* {.importc: "y".}: tcint
 
 ##  Reads touch input for a window.
 ##  Returns number of touch points read.
-proc touch*(bmp: ptr Tigr; points: ptr TigrTouchPoint; maxPoints: TInt): TInt {.cdecl, importc: "tigrTouch", header: vim.}
+proc touch*(bmp: ptr Tigr; points: ptr TigrTouchPoint; maxPoints: tcint): tcint {.cdecl, importc: "tigrTouch", header: vim.}
 
 ##  Reads the keyboard for a window.
 ##  Returns non-zero if a key is pressed/held.
 ##  tigrKeyDown tests for the initial press, tigrKeyHeld repeats each frame.
-proc keyDown*(bmp: ptr Tigr; key: TInt): TInt {.cdecl, importc: "tigrKeyDown", header: vim.}
+proc keyDown*(bmp: ptr Tigr; key: tcint): tcint {.cdecl, importc: "tigrKeyDown", header: vim.}
 
-proc keyHeld*(bmp: ptr Tigr; key: TInt): TInt {.cdecl, importc: "tigrKeyHeld", header: vim.}
+proc keyHeld*(bmp: ptr Tigr; key: tcint): tcint {.cdecl, importc: "tigrKeyHeld", header: vim.}
 
 ##  Reads character input for a window.
 ##  Returns the Unicode value of the last key pressed, or 0 if none.
-proc readChar*(bmp: ptr Tigr): TInt {.cdecl, importc: "tigrReadChar", header: vim.}
+proc readChar*(bmp: ptr Tigr): tcint {.cdecl, importc: "tigrReadChar", header: vim.}
 
 ##  Show / hide virtual keyboard.
 ##  (Only available on iOS / Android)
-proc showKeyboard*(show: TInt) {.cdecl, importc: "tigrShowKeyboard", header: vim.}
+proc showKeyboard*(show: tcint) {.cdecl, importc: "tigrShowKeyboard", header: vim.}
 
 ##  Bitmap I/O -------------------------------------------------------------
 ##  Loads a PNG, from either a file or memory. (fileName is UTF-8)
 ##  On error, returns NULL and sets errno.
 proc loadImage*(fileName: cstring): ptr Tigr {.cdecl, importc: "tigrLoadImage", header: vim.}
 
-proc loadImageMem*(data: pointer; length: TInt): ptr Tigr {.cdecl,
+proc loadImageMem*(data: pointer; length: tcint): ptr Tigr {.cdecl,
     importc: "tigrLoadImageMem", header: vim.}
 
 ##  Saves a PNG to a file. (fileName is UTF-8)
 ##  On error, returns zero and sets errno.
-proc saveImage*(fileName: cstring; bmp: ptr Tigr): TInt {.cdecl,
+proc saveImage*(fileName: cstring; bmp: ptr Tigr): tcint {.cdecl,
     importc: "tigrSaveImage", header: vim.}
 
 ##  Helpers ----------------------------------------------------------------
 ##  Returns the amount of time elapsed since tigrTime was last called,
 ##  or zero on the first call.
-proc time*(): TFloat {.cdecl, importc: "tigrTime", header: vim.}
+proc time*(): tcfloat {.cdecl, importc: "tigrTime", header: vim.}
 
 ##  Displays an error message and quits. (UTF-8)
 ##  'bmp' can be NULL.
@@ -341,20 +341,20 @@ proc readFile*(fileName: cstring; length: ptr int): cstring {.cdecl, importc: "t
 
 ##  Decompresses DEFLATEd zip/zlib data into a buffer.
 ##  Returns non-zero on success.
-proc inflate*(`out`: pointer; outlen: TUInt; `in`: pointer; inlen: TUInt): TInt {.cdecl, importc: "tigrInflate", header: vim.}
+proc inflate*(`out`: pointer; outlen: tcuint; `in`: pointer; inlen: tcuint): tcint {.cdecl, importc: "tigrInflate", header: vim.}
 
 ##  Decodes a single UTF8 codepoint and returns the next pointer.
 proc decodeUTF8*(text: cstring; cp: ptr int): cstring {.cdecl,
     importc: "tigrDecodeUTF8", header: vim.}
 
 ##  Encodes a single UTF8 codepoint and returns the next pointer.
-proc encodeUTF8*(text: cstring; cp: TInt): cstring {.cdecl, importc: "tigrEncodeUTF8", header: vim.}
+proc encodeUTF8*(text: cstring; cp: tcint): cstring {.cdecl, importc: "tigrEncodeUTF8", header: vim.}
 
 # converts
 converter n2tkey*(n: SomeInteger|char): TKey = n.TKey
-converter n2ti*(n: SomeNumber|char|enum): TInt = n.cint
-converter n2tui*(n: SomeNumber|char|enum): TUInt = n.cuint
-converter n2tf*(n: int): TFloat = n.cfloat
+converter n2tcui*(n: SomeNumber|char|enum): tcuint = n.cuint
+converter n2tci*(n: SomeNumber|char|enum): tcint = n.cint
+converter n2tcf*(n: int): tcfloat = n.cfloat
 #converter p2cstr*(p: pointer|ptr): cstring = cast[cstring](p)
 #converter sz2pt*(sz: array|UncheckedArray): pointer = sz[0].addr
 #converter sz2cstr*(sz: array|UncheckedArray): cstring = cast[cstring](sz[0].addr)
