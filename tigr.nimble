@@ -7,7 +7,7 @@ srcDir        = "src"
 installExt = @["nim","c","h"]
 
 # Dependencies
-requires "nim >= 1.9.1"
+requires "nim >= 1.6.6"
 #taskRequires "test", "opengl"
 
 task test, "Runs the test suite":

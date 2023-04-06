@@ -93,7 +93,7 @@ proc main() =
 
   # Maintain a list of characters entered.
   var chars: array[16, char]
-  c_memset(chars, '_', 16)
+  c_memset(chars.addr, '_', 16)
   var
     dt: float
     x, y, b: int
@@ -133,7 +133,7 @@ proc main() =
     # Print out the character buffer too.
     var
       tmp {.global.} : array[128, char]
-      p: cstring = tmp
+      p: cstring = tmp.addr
     for n in 0..<16:
       p = encodeUTF8(p, chars[n])
     screen.print(tfont, 160, 222, RGB(0xff, 0xff, 0xff), "Chars: %s", tmp[0].addr)
