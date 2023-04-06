@@ -4,7 +4,7 @@ var a:int = 100
 var b:float = 22.22
 var c = "string"
 var d:array[3,char] = ['a', 'b', 'c']
-let p = cast[cstring](d.addr)
+let p = cast[cstring](d[0].addr)
 assert c == "string".cstring
 assert p == "abc".cstring
 

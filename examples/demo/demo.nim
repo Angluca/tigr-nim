@@ -133,7 +133,7 @@ proc main() =
     # Print out the character buffer too.
     var
       tmp {.global.} : array[128, char]
-      p: cstring = tmp.addr
+      p: cstring = tmp[0].addr
     for n in 0..<16:
       p = encodeUTF8(p, chars[n])
     screen.print(tfont, 160, 222, RGB(0xff, 0xff, 0xff), "Chars: %s", tmp[0].addr)
