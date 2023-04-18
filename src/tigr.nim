@@ -16,6 +16,7 @@
 ##
 
 ##  Compiler configuration.
+#{.warning[CStringConv]:off.}
 when defined(windows):
   {.passL: "-s -lopengl32 -lgdi32".}
 elif defined(macosx):
@@ -225,7 +226,6 @@ proc RGB*(r: byte; g: byte; b: byte): TPixel {.inline, cdecl, importc: "tigrRGB"
 proc RGBA*(r: byte; g: byte; b: byte; a: byte): TPixel {.inline, cdecl, importc: "tigrRGBA".}
 
 ##  Font printing ----------------------------------------------------------
-
 type
   TigrGlyph* {.importc: "TigrGlyph", header: vim, bycopy.} = object
     code* {.importc: "code".}: tcint
@@ -354,8 +354,5 @@ proc encodeUTF8*(text: cstring; cp: tcint): cstring {.cdecl, importc: "tigrEncod
 converter n2tcui*(n: SomeNumber|char|enum): tcuint = n.cuint
 converter n2tci*(n: SomeNumber|char|enum): tcint = n.cint
 converter n2tcf*(n: int): tcfloat = n.cfloat
-#converter p2cstr*(p: pointer|ptr): cstring = cast[cstring](p)
-#converter sz2pt*(sz: array|UncheckedArray): pointer = sz[0].addr
-#converter sz2cstr*(sz: array|UncheckedArray): cstring = cast[cstring](sz[0].addr)
 
 
