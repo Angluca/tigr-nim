@@ -209,7 +209,7 @@ proc blitAlpha*(dest: ptr Tigr; src: ptr Tigr; dx: tcint; dy: tcint; sx: tcint; 
 ##  Blit mode == TIGR_BLEND_ALPHA:
 ##  Adest = Ablend * Ablend + Adest * (1 - Ablend)
 ##  Clips and blends.
-proc blittcint*(dest: ptr Tigr; src: ptr Tigr; dx: tcint; dy: tcint; sx: tcint; sy: tcint; w: tcint; h: tcint; tcint: TPixel) {.cdecl, importc: "tigrBlittcint", header: vim.}
+proc blitTint*(dest: ptr Tigr; src: ptr Tigr; dx: tcint; dy: tcint; sx: tcint; sy: tcint; w: tcint; h: tcint; tcint: TPixel) {.cdecl, importc: "tigrBlitTint", header: vim.}
 type
   TIGRBlitMode* {.size: sizeof(tcint).} = enum
     TIGR_KEEP_ALPHA = 0,    ##  Keep destination alpha value
