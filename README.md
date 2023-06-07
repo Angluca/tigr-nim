@@ -31,7 +31,7 @@ The 'hello world' example is less than 100kB:
 
 There are no additional libraries to include; everything is baked right into your program.
 
-TIGR is free to copy with no restrictions; see [tigr.nim](tigr.nim).
+TIGR is free to copy with no restrictions; see [tigr.nim](src/tigr.nim).
 
 ## How do I program with TIGR?
 ![](https://github.com/Angluca/tigr/blob/master/demo.gif)

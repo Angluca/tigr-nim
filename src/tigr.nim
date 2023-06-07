@@ -239,6 +239,11 @@ type
     numGlyphs* {.importc: "numGlyphs".}: tcint
     glyphs* {.importc: "glyphs".}: ptr TigrGlyph
 
+  TCodepage* {.size: sizeof(tcint).} = enum
+    TCP_ASCII = 0
+    TCP_1252 = 1252
+    TCP_UTF32 = 12001
+
 ##  Loads a font. The font bitmap should contain all characters
 ##  for the given codepage, excluding the first 32 control codes.
 ##  Supported codepages:
