@@ -36,7 +36,7 @@ TIGR is free to copy with no restrictions; see [tigr.nim](src/tigr.nim).
 ## How do I program with TIGR?
 ![](https://github.com/Angluca/tigr/blob/master/demo.gif)
 
-Here's an example Hello World program. For more information, just read [tigr.nim](tigr.nim) to see the APIs available.
+Here's an example Hello World program. For more information, just read [tigr.nim](src/tigr.nim) to see the APIs available.
 
 ```nim
 import tigr

@@ -8,7 +8,7 @@ installExt = @["nim","c","h"]
 
 # Dependencies
 requires "nim >= 1.6.6"
-#taskRequires "test", "opengl"
+requires "opengl"
 
 task test, "Runs the test suite":
   exec "nim c -r tests/tester.nim"
@@ -17,7 +17,6 @@ task test, "Runs the test suite":
   exec "nim c -r examples/clip/clip.nim"
   exec "nim c -r examples/shader/shader.nim"
   exec "nim c -r examples/opengl/oglc.nim"
-  echo "--- You can: nimble install opengl ---"
   exec "nim c -r examples/flags/flags.nim"
   withDir "examples/demo/":
     exec "nim c -r demo.nim"
