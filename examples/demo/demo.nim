@@ -96,7 +96,7 @@ proc main() =
   c_memset(chars.addr, '_', 16)
   var
     dt: float
-    x, y, b: int
+    x, y, b: cint
     prevx, prevy, prev: int
 
   # Repeat till they close the window.
@@ -116,7 +116,7 @@ proc main() =
 
     # Composite the backdrop and sprite onto the screen.
     screen.blit(backdrop, 0, 0, 0, 0, backdrop.w, backdrop.h)
-    screen.blitAlpha(squinkle, playerx - squinkle.w div 2, playery - squinkle.h, 0, 0, squinkle.w, squinkle.h, 1.0f)
+    screen.blitAlpha(squinkle, playerx.cint - squinkle.w div 2, playery.cint - squinkle.h, 0, 0, squinkle.w, squinkle.h, 1.0f)
     screen.print(tfont, 10, 10, RGBA(0xc0, 0xd0, 0xff, 0xc0), greeting)
     screen.print(tfont, 10, 222, RGBA(0xff, 0xff, 0xff, 0xff), "W A S D + SPACE")
 
@@ -133,7 +133,7 @@ proc main() =
     # Print out the character buffer too.
     var
       tmp {.global.} : array[128, char]
-      p: cstring = tmp[0].addr
+      p: cstring = cast[cstring](tmp[0].addr)
     for n in 0..<16:
       p = encodeUTF8(p, chars[n])
     screen.print(tfont, 160, 222, RGB(0xff, 0xff, 0xff), "Chars: %s", tmp[0].addr)
